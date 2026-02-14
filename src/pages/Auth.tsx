@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Building2 } from "lucide-react";
 
@@ -13,6 +14,7 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [selectedRole, setSelectedRole] = useState("client");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -32,7 +34,7 @@ export default function Auth() {
         email,
         password,
         options: {
-          data: { full_name: fullName },
+          data: { full_name: fullName, requested_role: selectedRole },
           emailRedirectTo: window.location.origin,
         },
       });
@@ -60,10 +62,27 @@ export default function Auth() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
-                <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-              </div>
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Full Name</Label>
+                  <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="role">Role</Label>
+                  <Select value={selectedRole} onValueChange={setSelectedRole}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="client">Client</SelectItem>
+                      <SelectItem value="broker">Broker</SelectItem>
+                      <SelectItem value="sales_agent">Sales Agent</SelectItem>
+                      <SelectItem value="supplier">Supplier</SelectItem>
+                      <SelectItem value="affiliate">Affiliate</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </>
             )}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
