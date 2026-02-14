@@ -10,6 +10,12 @@ import Leads from "./pages/Leads";
 import Properties from "./pages/Properties";
 import Tasks from "./pages/Tasks";
 import Analytics from "./pages/Analytics";
+import Contracts from "./pages/Contracts";
+import BuyRequests from "./pages/BuyRequests";
+import Invoices from "./pages/Invoices";
+import Shipments from "./pages/Shipments";
+import Referrals from "./pages/Referrals";
+import SettingsPage from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +35,12 @@ const App = () => (
             <Route path="/properties" element={<Properties />} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/contracts" element={<Contracts />} />
+            <Route path="/buy-requests" element={<BuyRequests />} />
+            <Route path="/invoices" element={<Invoices />} />
+            <Route path="/shipments" element={<Shipments />} />
+            <Route path="/referrals" element={<Referrals />} />
+            <Route path="/settings" element={<SettingsPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

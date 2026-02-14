@@ -1,6 +1,7 @@
-import { Building2, LayoutDashboard, Users, Home, CheckSquare, BarChart3, Settings, LogOut } from "lucide-react";
+import { Building2, LogOut } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/hooks/useAuth";
+import { roleNavMap } from "@/config/roleNavConfig";
 import {
   Sidebar,
   SidebarContent,
@@ -13,17 +14,22 @@ import {
   SidebarHeader,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import { Badge } from "@/components/ui/badge";
 
-const navItems = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Leads & Contacts", url: "/leads", icon: Users },
-  { title: "Properties", url: "/properties", icon: Home },
-  { title: "Tasks", url: "/tasks", icon: CheckSquare },
-  { title: "Analytics", url: "/analytics", icon: BarChart3 },
-];
+const roleLabelMap: Record<string, string> = {
+  admin: "Administrator",
+  broker: "Broker",
+  client: "Client",
+  sales_agent: "Sales Agent",
+  supplier: "Supplier",
+  affiliate: "Affiliate",
+  agent: "Agent",
+  user: "User",
+};
 
 export function AppSidebar() {
-  const { signOut, user } = useAuth();
+  const { signOut, user, role } = useAuth();
+  const navItems = roleNavMap[role ?? "client"];
 
   return (
     <Sidebar>
@@ -55,7 +61,10 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="p-4">
-        <div className="text-xs text-sidebar-foreground/60 truncate mb-2">{user?.email}</div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-xs text-sidebar-foreground/60 truncate">{user?.email}</span>
+          {role && <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{roleLabelMap[role] ?? role}</Badge>}
+        </div>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton onClick={signOut}>
